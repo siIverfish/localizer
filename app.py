@@ -16,6 +16,8 @@ import rospy
 from collections import deque
 from typing import List
 
+# todo: replace all instances of `time.sleep`
+# todo: move classes into sep. files
 # todo: move these into their respective classes
 TEAM_NUMBER = "3952"
 CLIENT_NAME = "3952-odometry-subscriber"
