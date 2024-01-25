@@ -16,6 +16,7 @@ import rospy
 from collections import deque
 from typing import List
 
+# todo: replace deque with Option<> equ.
 # todo: replace all instances of `time.sleep`
 # todo: move classes into sep. files
 # todo: move these into their respective classes
