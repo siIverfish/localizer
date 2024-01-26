@@ -1,3 +1,12 @@
+"""
+This class works similarly to the odometrey subscriber, but with different way of retrieving values. 
+(See odometry_position_subscriber for an explanation of the iterator situation). 
+
+To get a value, it has to hook into rclpy and run whatever subscriber code they have over there. Then, it checks if the hook caught any fish (if anything called the callback function) and only then does it get anything to return.
+
+May have to alter this file to spin until it gets a new value.
+"""
+
 import rclpy
 
 from apriltags_ros.msg import AprilTagDetectionArray
