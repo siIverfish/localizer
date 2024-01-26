@@ -5,6 +5,8 @@
     perform localization code; and publish final location of
     the robot on the field to NetworkTables so that 
     the RoboRIO can *know where it is!*
+
+    Uses piped iterators for all processing.
 """
 
 import ntcore
