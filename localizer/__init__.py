@@ -39,11 +39,12 @@ def main(args=None):
     final_positions = map(localizer, localization_inputs)
     published_values = map(new_position_publisher, final_positions)
 
+    # at this point published_values is an infinite iterable of `None`
     # start pulling values through the iterator chain
     run(published_values)
 
     # this code won't happen, but i'll leave it in case a 
-    # StopIteration case is added to `new_position_publisher.publish_each` 
+    # StopIteration case is added 
     rclpy.shutdown()
 
 

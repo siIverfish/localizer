@@ -48,7 +48,7 @@ class AprilTagPositionSubscriber(rclpy.node.Node):
             self.ROS_TOPIC_NAME,
             self.callback,
             # this is the history depth. may need to be set to 1
-            # look at docs later
+            # todo: look at docs later
             10
         )
 
@@ -62,6 +62,8 @@ class AprilTagPositionSubscriber(rclpy.node.Node):
             rclpy.spin_once(self)
 
             # keep spinning until we get a value
+            # todo: look into spin_until_future_completed to automatically spin
+            # until we get a value without manually checking like this.
             if not self.value:
                 continue
             
