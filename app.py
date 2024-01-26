@@ -16,6 +16,9 @@ import rospy
 from collections import deque
 from typing import List
 
+# todo: replace all instances of `time.sleep`
+# todo: move classes into sep. files
+
 TABLE_NAME = "datatable"
 NT_INSTANCE = ntcore.NetworkTableInstance.getDefault()
 NT_TABLE = NT_INSTANCE.getTable(TABLE_NAME)
@@ -45,7 +48,7 @@ class OdometryPositionSubscriber:
 
     async def __iter__(self):
         # todo: make the `time.sleep` call here start counting the 1 second before the yield
-        # instead of starting and stopping after with async sleep
+        # instead of starting and stopping after with synchronous sleep
         last_result = None
         while True:
             current_result = self.nt_position_subscriber.get()
@@ -62,9 +65,8 @@ class ApriltagPositionSubscriber:
     """
 
     # https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_apriltag/isaac_ros_apriltag/index.html#quickstart
-    # this might be the wrong topic name, could be "tag_detections"
     ROS_TOPIC_NAME = "tag_detections"
-    DATA_TYPE = "sensor_msgs/CameraInfo"
+    DATA_TYPE = "isaac_ros_apriltag_interfaces/AprilTagDetectionArray"
     NODE_NAME = "ApriltagPositionSubscriber@jetons_localization"
 
 
