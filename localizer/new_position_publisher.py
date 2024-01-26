@@ -6,6 +6,5 @@ class NewPositionPublisher:
             .getDoubleArrayTopic(self.PUBLISH_TOPIC_NAME)\
             .publish()
     
-    def publish_each(self, values):
-        for value in values:
-            self._publisher.set(value)
+    def publish(self, value):
+        self._publisher.set(value)

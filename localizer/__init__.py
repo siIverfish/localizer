@@ -21,6 +21,9 @@ TABLE_NAME = "datatable"
 NT_INSTANCE = ntcore.NetworkTableInstance.getDefault()
 NT_TABLE = NT_INSTANCE.getTable(TABLE_NAME)
 
+def run(iterable):
+    for _ in iterable:
+        pass
 
 def main(args=None):
     rclpy.init(args=args)
@@ -31,10 +34,13 @@ def main(args=None):
     localizer = Localizer()
     new_position_publisher = NewPositionPublisher(NT_TABLE)
 
-    # setup iterator flow path & go
+    # setup iterator flow path
     localization_inputs = zip(odometry_position_subscriber, apriltag_position_subscriber)
     final_positions = map(localizer, localization_inputs)
-    new_position_publisher.publish_each(final_positions)
+    published_values = map(new_position_publisher.publish, final_positions)
+
+    # start pulling values through the iterator chain
+    run(published_values)
 
     # this code won't happen, but i'll leave it in case a 
     # StopIteration case is added to `new_position_publisher.publish_each` 
