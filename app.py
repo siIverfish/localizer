@@ -46,7 +46,7 @@ class OdometryPositionSubscriber:
         self.nt_instance.startClient4(self.CLIENT_NAME) # i do not know what this does
         self.nt_instance.setServerTeam(self.TEAM_NUMBER) # where TEAM=190, 294, etc, or use inst.setServer("hostname") or similar
 
-    async def __iter__(self):
+    def __iter__(self):
         # todo: make the `time.sleep` call here start counting the 1 second before the yield
         # instead of starting and stopping after with synchronous sleep
         last_result = None
@@ -77,7 +77,7 @@ class MinimalSubscriber(rclpy.node.Node):
     def callback(self, tag_detections):
         self.value = tag_detections
     
-    
+
     def __iter__(self):
         while True:
             if self.value:
