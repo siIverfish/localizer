@@ -6,5 +6,5 @@ class NewPositionPublisher:
             .getDoubleArrayTopic(self.PUBLISH_TOPIC_NAME)\
             .publish()
     
-    def publish(self, value):
+    def __call__(self, value):
         self._publisher.set(value)

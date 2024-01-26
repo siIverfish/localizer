@@ -37,7 +37,7 @@ def main(args=None):
     # setup iterator flow path
     localization_inputs = zip(odometry_position_subscriber, apriltag_position_subscriber)
     final_positions = map(localizer, localization_inputs)
-    published_values = map(new_position_publisher.publish, final_positions)
+    published_values = map(new_position_publisher, final_positions)
 
     # start pulling values through the iterator chain
     run(published_values)
