@@ -12,6 +12,9 @@
 import ntcore
 import rclpy
 
+from typing import Iterator
+from types import NoneType
+
 from .odometry_position_subscriber import OdometryPositionSubscriber
 from .apriltag_position_subscriber import AprilTagPositionSubscriber
 from .new_position_publisher import NewPositionPublisher
@@ -22,12 +25,11 @@ NT_INSTANCE = ntcore.NetworkTableInstance.getDefault()
 NT_TABLE = NT_INSTANCE.getTable(TABLE_NAME)
 
 def run(iterable):
+    """ Consume an iterable. """
     for _ in iterable:
         pass
 
-def main(args=None):
-    rclpy.init(args=args)
-
+def initialize_iterator() -> Iterator[NoneType]:
     # Set up inputs, localizer, and output
     odometry_position_subscriber = OdometryPositionSubscriber(NT_TABLE)
     apriltag_position_subscriber = AprilTagPositionSubscriber()
@@ -39,13 +41,18 @@ def main(args=None):
     final_positions = map(localizer, localization_inputs)
     published_values = map(new_position_publisher, final_positions)
 
-    # at this point published_values is an infinite iterable of `None`
-    # start pulling values through the iterator chain
-    run(published_values)
-
-    # this code won't happen, but i'll leave it in case a 
-    # StopIteration case is added 
-    rclpy.shutdown()
+def main(args=None):
+    rclpy.init(args=args)
+    iterator: Iterator[NoneType] = initialize_iterator()
+    try:
+        # start pulling values through the iterator chain
+        run(iterator)
+    except KeyboardInterrupt:
+        print("Ctrl-C detected, shutting down...")
+    finally:
+        # really it doesn't matter if this code is in the `except` or `finally` block
+        rclpy.shutdown()
+        print("rclpy.shutdown() called successfully.")
 
 
 if __name__ == "__main__":
