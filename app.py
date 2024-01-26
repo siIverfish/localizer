@@ -12,6 +12,11 @@ import time
 
 # wonky import, needs apt package
 import rospy
+import rclpy
+
+from rclpy.node import Node
+# this import probably doesn't work
+from isaac_ros_apriltag_interfaces import AprilTagDetectionArray
 
 from collections import deque
 from typing import List
@@ -58,6 +63,42 @@ class OdometryPositionSubscriber:
             time.sleep(0.1)
 
 
+class MinimalSubscriber(Node):
+    ROS_TOPIC_NAME = "tag_detections"
+    DATA_TYPE = AprilTagDetectionArray
+    NODE_NAME = "ApriltagPositionSubscriber@jetons_localization"
+
+    def __init__(self):
+        super().__init__(self.NODE_NAME)
+        self.subscription = self.create_subscription(
+            self.DATA_TYPE,
+            self.ROS_TOPIC_NAME,
+            self.callback,
+            10 # this is the history depth. may need to be set to 1
+            # look at docs later
+        )
+
+
+    def callback(self, tag_detections):
+        self.value = tag_detections
+    
+    
+    def __iter__(self):
+        while True:
+            if self.value:
+                temp = self.value
+                self.value = None
+                yield temp
+            time.sleep(0.1)
+
+
+def main_imported(args=None):
+    rclpy.init(args=args)
+    minimal_subscriber = MinimalSubscriber()
+    rclpy.spin(minimal_subscriber)
+    rclpy.shutdown()
+
+
 class ApriltagPositionSubscriber:
     """
       Subscribes to the ROS topic (specified by ROS_TOPIC_NAME)
@@ -65,9 +106,7 @@ class ApriltagPositionSubscriber:
     """
 
     # https://nvidia-isaac-ros.github.io/repositories_and_packages/isaac_ros_apriltag/isaac_ros_apriltag/index.html#quickstart
-    ROS_TOPIC_NAME = "tag_detections"
-    DATA_TYPE = "isaac_ros_apriltag_interfaces/AprilTagDetectionArray"
-    NODE_NAME = "ApriltagPositionSubscriber@jetons_localization"
+    
 
 
     def __init__(self, *, callback_function=None):
@@ -80,19 +119,7 @@ class ApriltagPositionSubscriber:
         rospy.Subscriber(self.ROS_TOPIC_NAME, self.DATA_TYPE, callback_function)
     
     
-    async def callback(self, tag_detections):
-        self.value = tag_detections
     
-    
-    async def __iter__(self):
-        while True:
-            if self.value:
-                # this could be better, find an Optional<> datatype
-                # like Rust has & import it or something.
-                temp = self.value
-                self.value = None
-                yield temp
-            time.sleep(0.1)
 
 
 class Localizer:
