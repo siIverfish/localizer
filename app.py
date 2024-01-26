@@ -14,12 +14,7 @@ import time
 import rospy
 import rclpy
 
-from rclpy.node import Node
-# this import probably doesn't work
-from isaac_ros_apriltag_interfaces import AprilTagDetectionArray
-
-from collections import deque
-from typing import List
+from apriltags_ros.msg import AprilTagDetectionArray
 
 # todo: replace all instances of `time.sleep`
 # todo: move classes into sep. files
@@ -63,7 +58,7 @@ class OdometryPositionSubscriber:
             time.sleep(0.1)
 
 
-class MinimalSubscriber(Node):
+class MinimalSubscriber(rclpy.node.Node):
     ROS_TOPIC_NAME = "tag_detections"
     DATA_TYPE = AprilTagDetectionArray
     NODE_NAME = "ApriltagPositionSubscriber@jetons_localization"
