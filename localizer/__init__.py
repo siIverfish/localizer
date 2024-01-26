@@ -12,10 +12,10 @@
 import ntcore
 import rclpy
 
-from odometry_position_subscriber import OdometryPositionSubscriber
-from apriltag_position_subscriber import AprilTagPositionSubscriber
-from new_position_publisher import NewPositionPublisher
-from localizer import Localizer
+from localizer.odometry_position_subscriber import OdometryPositionSubscriber
+from localizer.apriltag_position_subscriber import AprilTagPositionSubscriber
+from localizer.new_position_publisher import NewPositionPublisher
+from localizer.localizer import Localizer
 
 TABLE_NAME = "datatable"
 NT_INSTANCE = ntcore.NetworkTableInstance.getDefault()
