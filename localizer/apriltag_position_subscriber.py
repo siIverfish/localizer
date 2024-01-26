@@ -17,8 +17,18 @@ thanks for listening to my tedtalk - ivan
 """
 
 import rclpy
+import time
 
+# api: 
+# https://docs.ros.org/en/melodic/api/apriltag_ros/html/msg/AprilTagDetectionArray.html
 from apriltags_ros.msg import AprilTagDetectionArray
+
+def is_recent(april_tag_detection_array, *, seconds):
+    current_time_secs = time.time()
+    detection_time_secs = april_tag_detection_array.header.stamp.secs + \
+                          april_tag_detection_array.header.stamp.nsecs / 1e9
+    time_since_detected_secs = current_time_secs - detection_time_secs
+    return time_since_detected_secs < seconds
 
 class AprilTagPositionSubscriber(rclpy.node.Node):
     """
@@ -29,6 +39,7 @@ class AprilTagPositionSubscriber(rclpy.node.Node):
     ROS_TOPIC_NAME = "tag_detections"
     DATA_TYPE = AprilTagDetectionArray
     NODE_NAME = "ApriltagPositionSubscriber@jetons_localization"
+    ACCEPTABLE_TIME_SINCE_DETECTED_SECS = 0.3 # seconds
 
     def __init__(self):
         super().__init__(self.NODE_NAME)
@@ -49,8 +60,20 @@ class AprilTagPositionSubscriber(rclpy.node.Node):
     def __iter__(self):
         while True:
             rclpy.spin_once(self)
-            if self.value:
-                temp = self.value
+
+            # keep spinning until we get a value
+            if not self.value:
+                continue
+            
+            # discard outdated values
+            if not is_recent(self.value, self.ACCEPTABLE_TIME_SINCE_DETECTED_SECS):
                 self.value = None
-                yield temp
-            # time.sleep(0.1) ~probably~ don't need this
+                continue
+            
+            # send value off to be processed
+            yield self.value
+
+            # discard used value when we eventually resume execution
+            # keep in mind this line executes most likely a couple hundred ms
+            # after the yield.
+            self.value = None
