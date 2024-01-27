@@ -1,5 +1,5 @@
 from typing import List
-from apriltags_ros.msg import AprilTagDetectionArray
+from .apriltags_ros import AprilTagDetectionArray
 
 class Localizer:
     def get_localized_position(
