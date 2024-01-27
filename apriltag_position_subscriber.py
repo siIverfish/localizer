@@ -17,6 +17,7 @@ thanks for listening to my tedtalk - ivan
 """
 
 import rclpy
+import rclpy.node
 import time
 
 # api: 
@@ -30,7 +31,7 @@ def is_recent(april_tag_detection_array, *, seconds):
     time_since_detected_secs = current_time_secs - detection_time_secs
     return time_since_detected_secs < seconds
 
-class AprilTagPositionSubscriber(rclpy.Node):
+class AprilTagPositionSubscriber(rclpy.node.Node):
     """
       Subscribes to the ROS topic (specified by ROS_TOPIC_NAME)
       and sends its data to the callback when received.
