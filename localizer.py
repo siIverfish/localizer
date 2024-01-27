@@ -7,7 +7,7 @@ class Localizer:
             apriltag_locations: AprilTagDetectionArray, 
             odometry_location: List[float],
             ) -> List[float]:
-        ... # this code will be written after we decide on a localization library.
+        raise NotImplementedError() # this code will be written after we decide on a localization library.
     
     def __call__(self, zipped_inputs):
         return self.get_localized_position(*zipped_inputs)
