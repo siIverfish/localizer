@@ -13,7 +13,6 @@ import ntcore
 import rclpy
 
 from typing import Iterator
-from types import NoneType
 
 from .odometry_position_subscriber import OdometryPositionSubscriber
 from .apriltag_position_subscriber import AprilTagPositionSubscriber
@@ -29,7 +28,7 @@ def run(iterable):
     for _ in iterable:
         pass
 
-def initialize_iterator() -> Iterator[NoneType]:
+def initialize_iterator() -> Iterator[None]:
     # Set up inputs, localizer, and output
     odometry_position_subscriber = OdometryPositionSubscriber(NT_TABLE)
     apriltag_position_subscriber = AprilTagPositionSubscriber()
