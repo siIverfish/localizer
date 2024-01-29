@@ -21,6 +21,7 @@ from .localizer import Localizer
 
 TABLE_NAME = "datatable"
 NT_INSTANCE = ntcore.NetworkTableInstance.getDefault()
+
 NT_TABLE = NT_INSTANCE.getTable(TABLE_NAME)
 
 def run(iterable):
@@ -30,10 +31,10 @@ def run(iterable):
 
 def initialize_iterator() -> Iterator[None]:
     # Set up inputs, localizer, and output
-    odometry_position_subscriber = OdometryPositionSubscriber(NT_TABLE)
+    odometry_position_subscriber = OdometryPositionSubscriber(table=NT_TABLE)
     apriltag_position_subscriber = AprilTagPositionSubscriber()
     localizer = Localizer()
-    new_position_publisher = NewPositionPublisher(NT_TABLE)
+    new_position_publisher = NewPositionPublisher(table=NT_TABLE)
 
     # setup iterator flow path
     localization_inputs = zip(odometry_position_subscriber, apriltag_position_subscriber)
@@ -42,7 +43,7 @@ def initialize_iterator() -> Iterator[None]:
 
 def main(args=None):
     rclpy.init(args=args)
-    iterator: Iterator[NoneType] = initialize_iterator()
+    iterator: Iterator[None] = initialize_iterator()
     try:
         # start pulling values through the iterator chain
         run(iterator)
