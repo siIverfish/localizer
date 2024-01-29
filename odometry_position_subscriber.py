@@ -16,7 +16,7 @@ class OdometryPositionSubscriber:
     TEAM_NUMBER = "3952"
 
     def __init__(self, *, table):
-        self.nt_position_subscriber = table.getDoubleArrayTopic(self.NT_ODOMETRY_TOPIC_NAME).subscribe(0)
+        self.nt_position_subscriber = table.getDoubleArrayTopic(self.NT_ODOMETRY_TOPIC_NAME).subscribe([0])
         # these values are probably mostly diagnostic
         self.nt_instance.startClient4(self.CLIENT_NAME) # i do not know what this does
         self.nt_instance.setServerTeam(self.TEAM_NUMBER) # where TEAM=190, 294, etc, or use inst.setServer("hostname") or similar
