@@ -62,6 +62,7 @@ class AprilTagPositionSubscriber(rclpy.node.Node):
         while True:
             print("Spinning rclpy")
             rclpy.spin_once(self)
+            print("Done spinning stupid bad rclpy")
 
             # keep spinning until we get a value
             # todo: look into spin_until_future_completed to automatically spin
