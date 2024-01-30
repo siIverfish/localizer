@@ -13,7 +13,7 @@ Basically, the point is that the next() method will *always* return the most rec
 class OdometryPositionSubscriber:
     NT_ODOMETRY_TOPIC_NAME  = "estimatedOdometryPosition"
     CLIENT_NAME = "3952-odometry-subscriber"
-    TEAM_NUMBER = "3952"
+    TEAM_NUMBER = 3952
 
     def __init__(self, *, instance, table):
         self.nt_position_subscriber = table.getDoubleArrayTopic(self.NT_ODOMETRY_TOPIC_NAME).subscribe([0.0])
