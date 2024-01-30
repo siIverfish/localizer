@@ -39,7 +39,7 @@ class AprilTagPositionSubscriber(rclpy.node.Node):
 
     ROS_TOPIC_NAME = "tag_detections"
     DATA_TYPE = AprilTagDetectionArray
-    NODE_NAME = "ApriltagPositionSubscriber@jetons_localization"
+    NODE_NAME = "ApriltagPositionSubscriber_jetons_localization"
     ACCEPTABLE_TIME_SINCE_DETECTED_SECS = 0.3 # seconds
 
     def __init__(self):
