@@ -42,7 +42,7 @@ def initialize_iterator() -> Iterator[None]:
 
 def main(args=None):
     rclpy.init(args=args)
-    iterator: Iterator[None] = initialize_iterator()
+    iterator = initialize_iterator()
     try:
         # start pulling values through the iterator chain
         run(iterator)
