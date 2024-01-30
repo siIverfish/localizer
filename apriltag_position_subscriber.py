@@ -22,7 +22,7 @@ import time
 
 # api: 
 # https://docs.ros.org/en/melodic/api/apriltag_ros/html/msg/AprilTagDetectionArray.html
-from .apriltags_ros import AprilTagDetectionArray
+from .isaac_ros_apriltag_interfaces import AprilTagDetectionArray
 
 def is_recent(april_tag_detection_array, *, seconds):
     current_time_secs = time.time()
