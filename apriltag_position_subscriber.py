@@ -52,6 +52,7 @@ class AprilTagPositionSubscriber(rclpy.node.Node):
             # todo: look at docs later
             10
         )
+        self.value = None
 
 
     def callback(self, tag_detections):
