@@ -15,11 +15,11 @@ class OdometryPositionSubscriber:
     CLIENT_NAME = "3952-odometry-subscriber"
     TEAM_NUMBER = "3952"
 
-    def __init__(self, *, table):
+    def __init__(self, *, instance, table):
         self.nt_position_subscriber = table.getDoubleArrayTopic(self.NT_ODOMETRY_TOPIC_NAME).subscribe([0.0])
         # these values are probably mostly diagnostic
-        self.nt_instance.startClient4(self.CLIENT_NAME) # i do not know what this does
-        self.nt_instance.setServerTeam(self.TEAM_NUMBER) # where TEAM=190, 294, etc, or use inst.setServer("hostname") or similar
+        instance.startClient4(self.CLIENT_NAME) # i do not know what this does
+        instance.setServerTeam(self.TEAM_NUMBER) # where TEAM=190, 294, etc, or use inst.setServer("hostname") or similar
 
     def __iter__(self):
         # todo: make the `time.sleep` call here start counting the 1 second before the yield

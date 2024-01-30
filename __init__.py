@@ -21,7 +21,6 @@ from .localizer import Localizer
 
 TABLE_NAME = "datatable"
 NT_INSTANCE = ntcore.NetworkTableInstance.getDefault()
-
 NT_TABLE = NT_INSTANCE.getTable(TABLE_NAME)
 
 def run(iterable):
@@ -31,7 +30,7 @@ def run(iterable):
 
 def initialize_iterator() -> Iterator[None]:
     # Set up inputs, localizer, and output
-    odometry_position_subscriber = OdometryPositionSubscriber(table=NT_TABLE)
+    odometry_position_subscriber = OdometryPositionSubscriber(instance=NT_INSTANCE, table=NT_TABLE)
     apriltag_position_subscriber = AprilTagPositionSubscriber()
     localizer = Localizer()
     new_position_publisher = NewPositionPublisher(table=NT_TABLE)
