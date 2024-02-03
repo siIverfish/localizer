@@ -72,7 +72,7 @@ class AprilTagPositionSubscriber(rclpy.node.Node):
                 continue
             
             # discard outdated values
-            if not is_recent(self.value, self.ACCEPTABLE_TIME_SINCE_DETECTED_SECS):
+            if not is_recent(self.value, seconds=self.ACCEPTABLE_TIME_SINCE_DETECTED_SECS):
                 self.value = None
                 continue
             
