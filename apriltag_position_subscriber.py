@@ -29,6 +29,7 @@ def is_recent(april_tag_detection_array, *, seconds):
     detection_time_secs = april_tag_detection_array.header.stamp.sec + \
                           april_tag_detection_array.header.stamp.nanosec / 1e9
     time_since_detected_secs = current_time_secs - detection_time_secs
+    print("time since detected:", time_since_detected_secs)
     return time_since_detected_secs < seconds
 
 class AprilTagPositionSubscriber(rclpy.node.Node):
