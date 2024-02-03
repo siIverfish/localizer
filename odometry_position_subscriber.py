@@ -27,6 +27,7 @@ class OdometryPositionSubscriber:
         last_result = None
         while True:
             current_result = self.nt_position_subscriber.get()
+            print(f"OdometryPositionSubscriber polled: got {current_result}")
             if current_result != last_result:
                 yield current_result
                 last_result = current_result

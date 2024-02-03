@@ -51,6 +51,7 @@ def main(args=None):
         print("Ctrl-C detected, shutting down...")
     finally:
         # really it doesn't matter if this code is in the `except` or `finally` block
+        # todo: failing to shut down?
         rclpy.shutdown()
         print("rclpy.shutdown() called successfully.")
 
