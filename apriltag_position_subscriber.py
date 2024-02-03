@@ -27,7 +27,7 @@ from isaac_ros_apriltag_interfaces.msg import AprilTagDetectionArray
 def is_recent(april_tag_detection_array, *, seconds):
     current_time_secs = time.time()
     detection_time_secs = april_tag_detection_array.header.stamp.sec + \
-                          april_tag_detection_array.header.stamp.nsec / 1e9
+                          april_tag_detection_array.header.stamp.nanosec / 1e9
     time_since_detected_secs = current_time_secs - detection_time_secs
     return time_since_detected_secs < seconds
 
