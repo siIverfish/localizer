@@ -76,6 +76,7 @@ class AprilTagPositionSubscriber(rclpy.node.Node):
                 continue
             
             # send value off to be processed
+            print("Yielding out of ApriltagPositionSubscriber.")
             yield self.value
 
             # discard used value when we eventually resume execution
