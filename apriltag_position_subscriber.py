@@ -26,9 +26,9 @@ from isaac_ros_apriltag_interfaces.msg import AprilTagDetectionArray
 
 def is_recent(april_tag_detection_array, *, seconds):
     current_time_secs = time.time()
-    detection_time_secs = april_tag_detection_array.header.stamp.sec + \
-                          april_tag_detection_array.header.stamp.nanosec / 1e9
-    time_since_detected_secs = current_time_secs - detection_time_secs
+    detection_time_secs = april_tag_detection_array.detections[0].pose.header.stamp.sec + \
+                          april_tag_detection_array.detections[0].pose.header.stamp.nanosec / 1e9
+    time_since_detected_secs = detection_time_secs
     print("Latency (AprilTagPositionSubscriber):", time_since_detected_secs)
     return time_since_detected_secs < seconds
 
@@ -70,6 +70,9 @@ class AprilTagPositionSubscriber(rclpy.node.Node):
             # todo: look into spin_until_future_completed to automatically spin
             # until we get a value without manually checking like this.
             if not self.value:
+                continue
+
+            if len(self.value.detections) == 0:
                 continue
             
             # discard outdated values

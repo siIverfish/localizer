@@ -1,7 +1,7 @@
 from typing import List
 
 class NewPositionPublisher:
-    PUBLISH_TOPIC_NAME = "finalRobotPosition"
+    PUBLISH_TOPIC_NAME = "apriltags_pose"
 
     def __init__(self, *, table) -> None:
         self._publisher = table\
