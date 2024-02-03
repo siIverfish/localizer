@@ -36,6 +36,7 @@ def initialize_iterator() -> Iterator[None]:
     new_position_publisher = NewPositionPublisher(table=NT_TABLE)
 
     # setup iterator flow path
+    odometry_position_subscriber = map(lambda x: (print(x),x)[1], odometry_position_subscriber)
     localization_inputs = zip(odometry_position_subscriber, apriltag_position_subscriber)
     final_positions = map(localizer, localization_inputs)
     published_values = map(new_position_publisher, final_positions)
