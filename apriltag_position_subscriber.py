@@ -56,14 +56,13 @@ class AprilTagPositionSubscriber(rclpy.node.Node):
 
 
     def callback(self, tag_detections):
+        print("Callback executing @ ApriltagPositionSubscriber...")
         self.value = tag_detections
     
 
     def __iter__(self):
         while True:
-            print("Spinning rclpy")
             rclpy.spin_once(self, timeout_sec=3)
-            print("Done spinning rclpy")
 
             # keep spinning until we get a value
             # todo: look into spin_until_future_completed to automatically spin
