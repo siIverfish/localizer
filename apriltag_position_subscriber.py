@@ -29,7 +29,7 @@ def is_recent(april_tag_detection_array, *, seconds):
     detection_time_secs = april_tag_detection_array.header.stamp.sec + \
                           april_tag_detection_array.header.stamp.nanosec / 1e9
     time_since_detected_secs = current_time_secs - detection_time_secs
-    print("time since detected:", time_since_detected_secs)
+    print("Latency (AprilTagPositionSubscriber):", time_since_detected_secs)
     return time_since_detected_secs < seconds
 
 class AprilTagPositionSubscriber(rclpy.node.Node):
@@ -63,6 +63,7 @@ class AprilTagPositionSubscriber(rclpy.node.Node):
 
     def __iter__(self):
         while True:
+            print("Spinning rclpy...")
             rclpy.spin_once(self, timeout_sec=3)
 
             # keep spinning until we get a value
@@ -73,6 +74,7 @@ class AprilTagPositionSubscriber(rclpy.node.Node):
             
             # discard outdated values
             if not is_recent(self.value, seconds=self.ACCEPTABLE_TIME_SINCE_DETECTED_SECS):
+                print("Discarding apriltag capture value -- not recent enough.")
                 self.value = None
                 continue
             
