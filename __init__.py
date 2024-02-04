@@ -19,7 +19,7 @@ from .apriltag_position_subscriber import AprilTagPositionSubscriber
 from .new_position_publisher import NewPositionPublisher
 from .localizer import Localizer
 
-TABLE_NAME = "datatable"
+TABLE_NAME = "jetson"
 NT_INSTANCE = ntcore.NetworkTableInstance.getDefault()
 NT_TABLE = NT_INSTANCE.getTable(TABLE_NAME)
 
@@ -37,8 +37,7 @@ def initialize_iterator() -> Iterator[None]:
 
     # setup iterator flow path
     # odometry_position_subscriber = map(lambda x: (print(x),x)[1], odometry_position_subscriber)
-    localization_inputs = zip(odometry_position_subscriber, apriltag_position_subscriber)
-    final_positions = map(localizer, localization_inputs)
+    final_positions = map(localizer, apriltag_position_subscriber)
     published_values = map(new_position_publisher, final_positions)
     return published_values
 
