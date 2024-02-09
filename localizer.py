@@ -11,5 +11,7 @@ class Localizer:
         concatenated_positions = []
         for detection in april_tag_detection_array.detections:
             position = detection.pose.pose.pose.position
+            rotation = detection.pose.pose.pose.orientation
             concatenated_positions.extend((position.x, position.y, position.z))
+            concatenated_positions.extend((rotation.x, rotation.y, rotation.z, rotation.w))
         return concatenated_positions
