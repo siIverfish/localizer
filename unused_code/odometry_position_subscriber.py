@@ -1,4 +1,6 @@
 """
+ ----------------------------- UNUSED -----------------------------
+
 This class (and the AprilTagPositionSubscriber)  *seem* simple, but actually do not work very well as traditional iterators. 
 The assumption about this iterator is that every time the robot publishes a value, it is collected in a queue and eventually fed out via the next method.
 However, this class doesn't have a queue: rather, there is a single `last_result` value updated whenever the loop runs. 

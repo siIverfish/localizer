@@ -23,14 +23,8 @@ import time
 # api: 
 # https://docs.ros.org/en/melodic/api/apriltag_ros/html/msg/AprilTagDetectionArray.html
 from isaac_ros_apriltag_interfaces.msg import AprilTagDetectionArray
+from timeutil import is_recent
 
-def is_recent(april_tag_detection_array, *, seconds):
-    current_time_secs = time.time()
-    detection_time_secs = april_tag_detection_array.detections[0].pose.header.stamp.sec + \
-                          april_tag_detection_array.detections[0].pose.header.stamp.nanosec / 1e9
-    time_since_detected_secs = detection_time_secs
-    print("Latency (AprilTagPositionSubscriber):", time_since_detected_secs)
-    return time_since_detected_secs < seconds
 
 class AprilTagPositionSubscriber(rclpy.node.Node):
     """
