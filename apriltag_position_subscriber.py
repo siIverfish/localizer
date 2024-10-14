@@ -23,7 +23,7 @@ import time
 # api: 
 # https://docs.ros.org/en/melodic/api/apriltag_ros/html/msg/AprilTagDetectionArray.html
 from isaac_ros_apriltag_interfaces.msg import AprilTagDetectionArray
-from timeutil import is_recent
+from .timeutil import is_recent
 
 
 class AprilTagPositionSubscriber(rclpy.node.Node):
