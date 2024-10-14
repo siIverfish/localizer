@@ -1,7 +1,7 @@
 
 from typing import List
 from isaac_ros_apriltag_interfaces.msg import AprilTagDetectionArray
-from timeutil import timestamp
+from .timeutil import timestamp
 
 # no longer localizes. now just extracts april tag positions.
 # rip bad name, will eventually fix
